@@ -1,51 +1,61 @@
 class Movie < ActiveRecord::Base
     def self.find_all_movies_by_year(year)
         Movie.where(year: year)
-      end
-      def self.create_with_title(title)
-        create(title: title)
+    end 
+
+    # create 
+    def self.create_with_title(title)        
+        movie = Movie.new(title:title) 
+        movie.save
+        movie
     end
 
+    # read
+    # return first item in the table
     def self.first_movie
-        self.first
-    end
-
+        Movie.first
+    end 
+    # return the last item in the table 
     def self.last_movie
-        self.last 
-    end
-
-    def self.movie_count 
-        self.count 
-    end
-
+        Movie.last
+    end 
+    # return the number of records in the table 
+    def self.movie_count
+        Movie.count 
+    end 
+    # return the movie with the specified id using the .find method
     def self.find_movie_with_id(id)
-        self.find(id)
-    end
-
-    def self.find_movie_with_attributes(attr)
-        self.find_by(attr)
-    end
-
+        Movie.find(id)
+    end 
+    # return the movie with the specified attributes using the .find_by method
+    def self.find_movie_with_attributes(attributes)
+        Movie.find_by(attributes)
+    end 
+    # return the movies released after 2002 using the .where method
     def self.find_movies_after_2002
-        self.where("release_date > 2002")
-    end
+        movies = Movie.where("release_date > ?", 2002)
+        movies 
+    end 
 
-    def update_with_attributes(attr)
-        self.update(attr)
-    end
+    # update
+    # update a single movie with the #update method
+    def update_with_attributes(attributes)
+        update(attributes)
+    end  
+    # update multiple movies at once with the .update method
+    def self.update_all_titles(title)
+        Movie.update_all(title:title)
+    end 
 
-    def self.update_all_titles(new_title)
-        self.update(title: new_title)
-    end
-
+    # delete
+    # delete a single movie with the #destroy method
     def self.delete_by_id(id)
-        self.delete(id)
-    end
-
+        movie = Movie.find_by(id: id)
+        movie.delete
+    end 
+    # delete all movies at once with the .destroy_all method
     def self.delete_all_movies
-        self.delete_all
-    end
-
-    
+        Movie.destroy_all
+    end 
 
 end
